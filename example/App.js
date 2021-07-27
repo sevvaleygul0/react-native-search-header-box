@@ -29,8 +29,8 @@ const App = () => {
   return (
     <>
       <StatusBar barStyle="dark-content" />
-      <SafeAreaView style={{alignItems: 'center'}}>
-        <SearchHeader />
+      <SafeAreaView style={{alignItems: 'center', paddingTop: 40}}>
+        <SearchHeader onRightButtonPress={() => console.log('HEY')} />
       </SafeAreaView>
     </>
   );

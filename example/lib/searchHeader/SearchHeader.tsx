@@ -8,6 +8,7 @@ import {
   ViewStyle,
   Image,
   TextStyle,
+  Keyboard,
 } from 'react-native';
 import styles, {_rightButton, _bottomContainerStyle} from './SeachHeader.style';
 
@@ -41,6 +42,10 @@ export class SearchHeader extends React.Component<Props, State> {
     this.state = {
       isSearchActive: false,
     };
+  }
+
+  componentDidMount() {
+    Keyboard.addListener('keyboardDidHide', this._forceLoseFocus);
   }
 
   topComponent = () => {
@@ -91,6 +96,10 @@ export class SearchHeader extends React.Component<Props, State> {
     );
   };
 
+  _forceLoseFocus = () => {
+    this.inputRef.blur();
+  };
+
   bottomComponent = () => {
     const {
       searchIconComponent,
@@ -115,6 +124,9 @@ export class SearchHeader extends React.Component<Props, State> {
           placeholder={placeholderText}
           style={[styles.textInputStyle, textInputStyle]}
           onFocus={() => this.setState({isSearchActive: true})}
+          onBlur={() => {
+            this.setState({isSearchActive: false});
+          }}
         />
       </View>
     );
