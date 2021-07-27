@@ -13,7 +13,6 @@ interface Style {
   topContainerStyle: ViewStyle;
   rightTextStyle: TextStyle;
   headerTitleTextStyle: TextStyle;
-  bottomContainerStyle: ViewStyle;
   textInputStyle: TextStyle;
 }
 
@@ -27,6 +26,21 @@ export const _rightButton = (backgroundColor) => ({
   maxWidth: 80,
   maxHeight: 50,
 });
+
+export const _bottomContainerStyle = (borderColor) => ({
+  width: '100%',
+  height: 40,
+  marginTop: 12,
+  borderRadius: 20,
+  backgroundColor: '#F4F4F4',
+  alignItems: 'center',
+  paddingLeft: 12,
+  paddingRight: 12,
+  flexDirection: 'row',
+  borderWidth: 1,
+  borderColor,
+});
+
 export default StyleSheet.create<Style>({
   mainContainerStyle: {
     width: screenWidth * 0.9,
@@ -43,17 +57,6 @@ export default StyleSheet.create<Style>({
   },
   headerTitleTextStyle: {
     fontWeight: '600',
-  },
-  bottomContainerStyle: {
-    width: '100%',
-    height: 40,
-    marginTop: 12,
-    borderRadius: 20,
-    backgroundColor: '#F4F4F4',
-    alignItems: 'center',
-    paddingLeft: 12,
-    paddingRight: 12,
-    flexDirection: 'row',
   },
   textInputStyle: {
     paddingLeft: 12,

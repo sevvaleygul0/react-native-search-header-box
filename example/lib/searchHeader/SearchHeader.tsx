@@ -9,7 +9,7 @@ import {
   Image,
   TextStyle,
 } from 'react-native';
-import styles, {_rightButton} from './SeachHeader.style';
+import styles, {_rightButton, _bottomContainerStyle} from './SeachHeader.style';
 
 export interface Props {
   mainContainerStyle?: ViewStyle | Array<ViewStyle>;
@@ -27,15 +27,20 @@ export interface Props {
   textInputStyle?: TextStyle | Array<TextStyle>;
   onLeftButtonPress?: () => void;
   onRightButtonPress?: () => void;
+  onChangeText?: () => void;
 }
 
-interface State {}
+interface State {
+  isSearchActive: boolean;
+}
 
 export class SearchHeader extends React.Component<Props, State> {
   inputRef: TextInput | null = null;
   constructor(props: Props) {
     super(props);
-    this.state = {};
+    this.state = {
+      isSearchActive: false,
+    };
   }
 
   topComponent = () => {
@@ -91,21 +96,25 @@ export class SearchHeader extends React.Component<Props, State> {
       searchIconComponent,
       placeholderText = 'Search your services..',
       textInputStyle,
+      onChangeText,
     } = this.props;
+    const icon = this.state.isSearchActive
+      ? require('../local-assets/active-search.png')
+      : require('../local-assets/search.png');
+    const borderColor = this.state.isSearchActive ? '#50C479' : '#F4F4F4';
     return (
-      <View style={styles.bottomContainerStyle}>
+      <View style={_bottomContainerStyle(borderColor)}>
         {searchIconComponent || (
-          <Image
-            source={require('../local-assets/search.png')}
-            style={{width: 20, height: 20}}
-          />
+          <Image source={icon} style={{width: 20, height: 20}} />
         )}
         <TextInput
-          placeholderTextColor="#C5C5C5"
+          placeholderTextColor={'#C5C5C5'}
           {...this.props}
+          onChangeText={onChangeText && onChangeText}
           ref={(ref) => (this.inputRef = ref)}
           placeholder={placeholderText}
           style={[styles.textInputStyle, textInputStyle]}
+          onFocus={() => this.setState({isSearchActive: true})}
         />
       </View>
     );
