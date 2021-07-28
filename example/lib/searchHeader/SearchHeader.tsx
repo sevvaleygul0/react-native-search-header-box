@@ -33,6 +33,8 @@ export interface Props {
   isVisibleLeftButton: boolean;
   isVisibleRightButton: boolean;
   isVisibleSearch: boolean;
+  rightButtonContainerStyle?: ViewStyle | Array<ViewStyle>;
+  placeholderTextColor?: string;
   onLeftButtonPress?: () => void;
   onRightButtonPress?: () => void;
 }
@@ -65,6 +67,7 @@ export class SearchHeader extends React.Component<Props, State> {
       headerTitleTextStyle,
       headerTitleTextComponent,
       leftButtonContainerStyle,
+      rightButtonContainerStyle,
       isVisibleLeftButton = true,
       isVisibleRightButton = true,
       onLeftButtonPress,
@@ -97,7 +100,10 @@ export class SearchHeader extends React.Component<Props, State> {
         {isVisibleRightButton && (
           <View>
             <TouchableOpacity
-              style={_rightButton(rightButtonBackgroundColor)}
+              style={[
+                _rightButton(rightButtonBackgroundColor),
+                rightButtonContainerStyle,
+              ]}
               onPress={onRightButtonPress && onRightButtonPress}>
               {rightButtonComponent || (
                 <Image
@@ -122,6 +128,7 @@ export class SearchHeader extends React.Component<Props, State> {
       placeholderText = 'Search..',
       textInputStyle,
       bottomContainerStyle,
+      placeholderTextColor = '#C5C5C5',
     } = this.props;
     const icon = this.state.isSearchActive
       ? require('../local-assets/active-search.png')
@@ -133,7 +140,7 @@ export class SearchHeader extends React.Component<Props, State> {
           <Image source={icon} style={{width: 20, height: 20}} />
         )}
         <TextInput
-          placeholderTextColor={'#C5C5C5'}
+          placeholderTextColor={placeholderTextColor}
           {...this.props}
           ref={(ref) => (this.inputRef = ref)}
           placeholder={placeholderText}
