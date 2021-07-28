@@ -14,24 +14,42 @@ interface Style {
   rightTextStyle: TextStyle;
   headerTitleTextStyle: TextStyle;
   textInputStyle: TextStyle;
+  leftButtonContainerStyle: ViewStyle;
 }
 
-export const _rightButton = (backgroundColor) => ({
+export const _rightButton = (backgroundColor: string): ViewStyle => ({
   backgroundColor,
   borderRadius: 12,
   paddingLeft: 12,
   paddingRight: 12,
   paddingTop: 3,
   paddingBottom: 3,
-  maxWidth: 80,
-  maxHeight: 50,
+  justifyContent: 'center',
+  alignItems: 'center',
+  width: 40,
+  height: 40,
 });
 
-export const _bottomContainerStyle = (borderColor) => ({
+export const _leftButtonContainerStyle = (
+  backgroundColor: string,
+): ViewStyle => ({
+  backgroundColor,
+  borderRadius: 12,
+  paddingLeft: 12,
+  paddingRight: 12,
+  paddingTop: 3,
+  paddingBottom: 3,
+  justifyContent: 'center',
+  alignItems: 'center',
+  width: 40,
+  height: 40,
+});
+
+export const _bottomContainerStyle = (borderColor: string): ViewStyle => ({
   width: '100%',
   height: 40,
   marginTop: 12,
-  borderRadius: 20,
+  borderRadius: 12,
   backgroundColor: '#F4F4F4',
   alignItems: 'center',
   paddingLeft: 12,
@@ -50,6 +68,7 @@ export default StyleSheet.create<Style>({
   topContainerStyle: {
     width: '100%',
     justifyContent: 'space-between',
+    alignItems: 'center',
     flexDirection: 'row',
   },
   rightTextStyle: {
@@ -63,5 +82,16 @@ export default StyleSheet.create<Style>({
     paddingRight: 12,
     width: '95%',
     height: '100%',
+  },
+  leftButtonContainerStyle: {
+    borderRadius: 12,
+    paddingLeft: 12,
+    paddingRight: 12,
+    paddingTop: 3,
+    paddingBottom: 3,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 40,
+    height: 40,
   },
 });

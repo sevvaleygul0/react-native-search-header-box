@@ -10,25 +10,31 @@ import {
   TextStyle,
   Keyboard,
 } from 'react-native';
-import styles, {_rightButton, _bottomContainerStyle} from './SeachHeader.style';
+import styles, {
+  _rightButton,
+  _bottomContainerStyle,
+  _leftButtonContainerStyle,
+} from './SeachHeader.style';
 
 export interface Props {
   mainContainerStyle?: ViewStyle | Array<ViewStyle>;
   leftIconComponent?: React.ReactChild;
   headerText?: string;
   rightButtonComponent?: React.ReactChild;
-  rightButtonText?: string;
-  rightButtonColor?: string;
-  rightTextComponent?: React.ReactChild;
-  rightTextStyle?: TextStyle | Array<TextStyle>;
+  rightButtonBackgroundColor?: string;
   headerTitleTextStyle?: TextStyle | Array<TextStyle>;
   headerTitleTextComponent?: React.ReactChild;
   searchIconComponent?: React.ReactChild;
   placeholderText?: string;
   textInputStyle?: TextStyle | Array<TextStyle>;
+  bottomContainerStyle?: ViewStyle | Array<ViewStyle>;
+  leftButtonContainerStyle?: ViewStyle | Array<ViewStyle>;
+  leftButtonBackgroundColor?: string;
+  isVisibleLeftButton: boolean;
+  isVisibleRightButton: boolean;
+  isVisibleSearch: boolean;
   onLeftButtonPress?: () => void;
   onRightButtonPress?: () => void;
-  onChangeText?: () => void;
 }
 
 interface State {
@@ -37,6 +43,7 @@ interface State {
 
 export class SearchHeader extends React.Component<Props, State> {
   inputRef: TextInput | null = null;
+
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -51,75 +58,83 @@ export class SearchHeader extends React.Component<Props, State> {
   topComponent = () => {
     const {
       leftIconComponent,
-      headerText,
+      headerText = '',
       rightButtonComponent,
-      rightButtonText,
-      rightButtonColor = '#50C479',
-      rightTextComponent,
-      rightTextStyle,
+      rightButtonBackgroundColor = '#F4F4F4',
+      leftButtonBackgroundColor = '#F4F4F4',
       headerTitleTextStyle,
       headerTitleTextComponent,
+      leftButtonContainerStyle,
+      isVisibleLeftButton = true,
+      isVisibleRightButton = true,
       onLeftButtonPress,
       onRightButtonPress,
     } = this.props;
     return (
       <View style={styles.topContainerStyle}>
-        <TouchableOpacity onPress={onLeftButtonPress && onLeftButtonPress}>
-          {leftIconComponent || (
-            <Image
-              source={require('../local-assets/arrow.png')}
-              style={{width: 16, height: 16}}
-            />
-          )}
-        </TouchableOpacity>
+        {isVisibleLeftButton && (
+          <TouchableOpacity
+            style={[
+              _leftButtonContainerStyle(leftButtonBackgroundColor),
+              leftButtonContainerStyle,
+            ]}
+            onPress={onLeftButtonPress && onLeftButtonPress}>
+            {leftIconComponent || (
+              <Image
+                source={require('../local-assets/arrow.png')}
+                style={{width: 16, height: 16}}
+              />
+            )}
+          </TouchableOpacity>
+        )}
         <View>
           {headerTitleTextComponent || (
             <Text style={[styles.headerTitleTextStyle, headerTitleTextStyle]}>
-              {headerText || 'Add expenses'}
+              {headerText}
             </Text>
           )}
         </View>
-        <View>
-          {rightButtonComponent || (
+        {isVisibleRightButton && (
+          <View>
             <TouchableOpacity
-              style={_rightButton(rightButtonColor)}
+              style={_rightButton(rightButtonBackgroundColor)}
               onPress={onRightButtonPress && onRightButtonPress}>
-              {rightTextComponent || (
-                <Text style={[styles.rightTextStyle, rightTextStyle]}>
-                  {rightButtonText || 'New'}
-                </Text>
+              {rightButtonComponent || (
+                <Image
+                  source={require('../local-assets/bell.png')}
+                  style={{width: 20, height: 20}}
+                />
               )}
             </TouchableOpacity>
-          )}
-        </View>
+          </View>
+        )}
       </View>
     );
   };
 
   _forceLoseFocus = () => {
-    this.inputRef.blur();
+    this.inputRef?.blur();
   };
 
   bottomComponent = () => {
     const {
       searchIconComponent,
-      placeholderText = 'Search your services..',
+      placeholderText = 'Search..',
       textInputStyle,
-      onChangeText,
+      bottomContainerStyle,
     } = this.props;
     const icon = this.state.isSearchActive
       ? require('../local-assets/active-search.png')
       : require('../local-assets/search.png');
     const borderColor = this.state.isSearchActive ? '#50C479' : '#F4F4F4';
     return (
-      <View style={_bottomContainerStyle(borderColor)}>
+      <View style={[_bottomContainerStyle(borderColor), bottomContainerStyle]}>
         {searchIconComponent || (
           <Image source={icon} style={{width: 20, height: 20}} />
         )}
         <TextInput
           placeholderTextColor={'#C5C5C5'}
           {...this.props}
-          onChangeText={onChangeText && onChangeText}
           ref={(ref) => (this.inputRef = ref)}
           placeholder={placeholderText}
           style={[styles.textInputStyle, textInputStyle]}
@@ -133,11 +148,11 @@ export class SearchHeader extends React.Component<Props, State> {
   };
 
   render() {
-    const {mainContainerStyle} = this.props;
+    const {mainContainerStyle, isVisibleSearch = true} = this.props;
     return (
       <View style={[styles.mainContainerStyle, mainContainerStyle]}>
         {this.topComponent()}
-        {this.bottomComponent()}
+        {isVisibleSearch && this.bottomComponent()}
       </View>
     );
   }
