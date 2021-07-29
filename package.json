@@ -4,20 +4,30 @@
   "description": "Extremely easy to create a React Native Component Library with both Stateful and Functional Component Examples.",
   "main": "./build/dist/index.js",
   "repository": "git@github.com:WrathChaos/react-native-typescript-library-starter.git",
-  "author": "FreakyCoder <kurayogun@gmail.com>",
+  "author": "Şevval Eygul <sevvalleygull@gmail.com>",
   "license": "MIT",
   "homepage": "https://www.freakycoder.com",
   "bugs": "https://github.com/WrathChaos/react-native-typescript-library-starter/issues",
   "keywords": [
-    "FreakyCoder",
-    "freakycoder",
-    "kuray",
-    "Kuray",
+    "SevvalEygul",
+    "sevvaleygul",
+    "sevval",
+    "Sevval",
     "react",
     "react-native",
     "javascript",
     "ui-lib",
-    "rn"
+    "rn",
+    "header",
+    "search",
+    "search-bar",
+    "searchbar",
+    "header-search",
+    "header-search-bar",
+    "search-header",
+    "search-header-bar",
+    "searchHeader",
+    "SearchHeader"
   ],
   "scripts": {
     "build": "cd lib && tsc && cp ../package.json ../build/dist/ && Echo Build completed!",
@@ -28,7 +38,8 @@
   },
   "peerDependencies": {
     "react": ">= 16.x.x",
-    "react-native": ">=0.63.x"
+    "react-native": ">=0.63.x",
+    "react-native-androw": ">= 0.0.34"
   },
   "devDependencies": {
     "@types/react": "^16.9.53",
@@ -52,5 +63,8 @@
       "npx prettier --write",
       "eslint src/*.js --fix-dry-run"
     ]
+  },
+  "dependencies": {
+    "react-native-androw": "0.0.34"
   }
 }
