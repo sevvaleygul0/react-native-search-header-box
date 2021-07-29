@@ -10,10 +10,12 @@ import {
   TextStyle,
   Keyboard,
 } from 'react-native';
+import Androw from 'react-native-androw';
 import styles, {
   _rightButton,
   _bottomContainerStyle,
   _leftButtonContainerStyle,
+  _searchBarShadowStyle,
 } from './SeachHeader.style';
 
 export interface Props {
@@ -35,6 +37,10 @@ export interface Props {
   isVisibleSearch: boolean;
   rightButtonContainerStyle?: ViewStyle | Array<ViewStyle>;
   placeholderTextColor?: string;
+  searchBarShadowColor?: string;
+  searchBarShadowStyle?: ViewStyle | Array<ViewStyle>;
+  inputActiveBorderColor?: string;
+  inputBorderColor?: string;
   onLeftButtonPress?: () => void;
   onRightButtonPress?: () => void;
 }
@@ -129,28 +135,42 @@ export class SearchHeader extends React.Component<Props, State> {
       textInputStyle,
       bottomContainerStyle,
       placeholderTextColor = '#C5C5C5',
+      searchBarShadowColor = '#BA8DB9',
+      searchBarShadowStyle,
+      inputActiveBorderColor = '#50C479',
+      inputBorderColor = '#F4F4F4',
     } = this.props;
     const icon = this.state.isSearchActive
       ? require('../local-assets/active-search.png')
       : require('../local-assets/search.png');
-    const borderColor = this.state.isSearchActive ? '#50C479' : '#F4F4F4';
+    const borderColor = this.state.isSearchActive
+      ? inputActiveBorderColor
+      : inputBorderColor;
     return (
-      <View style={[_bottomContainerStyle(borderColor), bottomContainerStyle]}>
-        {searchIconComponent || (
-          <Image source={icon} style={{width: 20, height: 20}} />
-        )}
-        <TextInput
-          placeholderTextColor={placeholderTextColor}
-          {...this.props}
-          ref={(ref) => (this.inputRef = ref)}
-          placeholder={placeholderText}
-          style={[styles.textInputStyle, textInputStyle]}
-          onFocus={() => this.setState({isSearchActive: true})}
-          onBlur={() => {
-            this.setState({isSearchActive: false});
-          }}
-        />
-      </View>
+      <Androw
+        style={[
+          _searchBarShadowStyle(searchBarShadowColor),
+          searchBarShadowStyle,
+        ]}>
+        <View
+          style={[_bottomContainerStyle(borderColor), bottomContainerStyle]}>
+          {searchIconComponent || (
+            <Image source={icon} style={{width: 20, height: 20}} />
+          )}
+
+          <TextInput
+            placeholderTextColor={placeholderTextColor}
+            {...this.props}
+            ref={(ref) => (this.inputRef = ref)}
+            placeholder={placeholderText}
+            style={[styles.textInputStyle, textInputStyle]}
+            onFocus={() => this.setState({isSearchActive: true})}
+            onBlur={() => {
+              this.setState({isSearchActive: false});
+            }}
+          />
+        </View>
+      </Androw>
     );
   };
 

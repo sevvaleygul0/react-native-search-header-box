@@ -48,15 +48,26 @@ export const _leftButtonContainerStyle = (
 export const _bottomContainerStyle = (borderColor: string): ViewStyle => ({
   width: '100%',
   height: 40,
+  borderWidth: 1,
   marginTop: 12,
+  marginBottom: 8,
   borderRadius: 12,
   backgroundColor: '#F4F4F4',
   alignItems: 'center',
   paddingLeft: 12,
   paddingRight: 12,
   flexDirection: 'row',
-  borderWidth: 1,
   borderColor,
+});
+
+export const _searchBarShadowStyle = (shadowColor): ViewStyle => ({
+  shadowRadius: 8,
+  shadowOpacity: 0.5,
+  shadowColor,
+  shadowOffset: {
+    width: 0,
+    height: 3,
+  },
 });
 
 export default StyleSheet.create<Style>({
@@ -80,7 +91,7 @@ export default StyleSheet.create<Style>({
   textInputStyle: {
     paddingLeft: 12,
     paddingRight: 12,
-    width: '95%',
+    width: '100%',
     height: '100%',
   },
   leftButtonContainerStyle: {

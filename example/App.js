@@ -29,7 +29,13 @@ const App = () => {
   return (
     <>
       <StatusBar barStyle="dark-content" />
-      <SafeAreaView style={{alignItems: 'center', paddingTop: 40}}>
+      <SafeAreaView
+        style={{
+          alignItems: 'center',
+          paddingTop: 40,
+          backgroundColor: '#EDEDED',
+          flex: 1,
+        }}>
         <SearchHeader
           leftButtonBackgroundColor="transparent"
           headerTitleTextComponent={
@@ -53,8 +59,9 @@ const App = () => {
             width: '100%',
             height: 40,
             marginTop: 12,
+            marginBottom: 8,
             borderRadius: 20,
-            backgroundColor: '#FFF3FF',
+            backgroundColor: '#D4AAD3',
             alignItems: 'center',
             paddingLeft: 12,
             paddingRight: 12,
@@ -63,7 +70,7 @@ const App = () => {
           rightButtonComponent={
             <Text style={{color: '#fff', fontWeight: '700'}}>New</Text>
           }
-          placeholderTextColor="purple"
+          placeholderTextColor="#fff"
           leftIconComponent={
             <Image
               source={require('./assets/down-arrow.png')}
@@ -75,6 +82,8 @@ const App = () => {
               source={require('./assets/search.png')}
               style={{width: 20, height: 20}}></Image>
           }
+          inputActiveBorderColor="#BA8DB9"
+          inputBorderColor="#D4AAD3"
           onRightButtonPress={() => console.log('HEY')}
         />
       </SafeAreaView>
