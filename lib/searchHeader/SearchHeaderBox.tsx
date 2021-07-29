@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Button,
   TextInput,
   Text,
   TouchableOpacity,
@@ -16,7 +15,7 @@ import styles, {
   _bottomContainerStyle,
   _leftButtonContainerStyle,
   _searchBarShadowStyle,
-} from './SeachHeader.style';
+} from './SeachHeaderBox.style';
 
 export interface Props {
   mainContainerStyle?: ViewStyle | Array<ViewStyle>;
@@ -49,7 +48,7 @@ interface State {
   isSearchActive: boolean;
 }
 
-export class SearchHeader extends React.Component<Props, State> {
+export class SearchHeaderBox extends React.Component<Props, State> {
   inputRef: TextInput | null = null;
 
   constructor(props: Props) {

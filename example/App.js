@@ -23,7 +23,7 @@ import {
   DebugInstructions,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-import {SearchHeader} from './lib/searchHeader/SearchHeader';
+import {SearchHeader} from './lib/searchHeader/SearchHeaderBox';
 
 const App = () => {
   return (

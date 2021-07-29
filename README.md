@@ -14,7 +14,7 @@
 Add the dependency:
 
 ```bash
-npm i react-native-search-header
+npm i react-native-search-header-box
 ```
 
 ## Peer Dependencies
@@ -32,7 +32,7 @@ npm i react-native-search-header
 ## Import
 
 ```jsx
-import { SearchHeader } from "react-native-search-header";
+import { SearchHeader } from "react-native-search-header-box";
 ```
 
 ## Fundamental Usage
