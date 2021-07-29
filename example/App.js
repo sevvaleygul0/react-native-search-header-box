@@ -84,7 +84,11 @@ const App = () => {
           }
           inputActiveBorderColor="#BA8DB9"
           inputBorderColor="#D4AAD3"
-          onRightButtonPress={() => console.log('HEY')}
+          onRightButtonPress={() => console.log('Right button')}
+        />
+        <Image
+          source={require('./lib/local-assets/box.png')}
+          style={{marginTop: 100, width: 180, height: 180}}
         />
       </SafeAreaView>
     </>

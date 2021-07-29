@@ -93,6 +93,7 @@ export default StyleSheet.create<Style>({
     paddingRight: 12,
     width: '100%',
     height: '100%',
+    color: 'purple',
   },
   leftButtonContainerStyle: {
     borderRadius: 12,
