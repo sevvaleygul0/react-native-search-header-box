@@ -23,7 +23,7 @@ import {
   DebugInstructions,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-import {SearchHeader} from './lib/searchHeader/SearchHeaderBox';
+import {SearchHeaderBox} from './lib/searchHeader/SearchHeaderBox';
 
 const App = () => {
   return (
@@ -36,7 +36,7 @@ const App = () => {
           backgroundColor: '#EDEDED',
           flex: 1,
         }}>
-        <SearchHeader
+        <SearchHeaderBox
           leftButtonBackgroundColor="transparent"
           headerTitleTextComponent={
             <Text style={{fontSize: 20, fontWeight: '800', color: 'purple'}}>

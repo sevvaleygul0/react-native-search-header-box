@@ -32,13 +32,13 @@ npm i react-native-search-header-box
 ## Import
 
 ```jsx
-import { SearchHeader } from "react-native-search-header-box";
+import { SearchHeaderBox } from "react-native-search-header-box";
 ```
 
 ## Fundamental Usage
 
 ```jsx
-<SearchHeader />
+<SearchHeaderBox />
 ```
 
 ## Example Project 😍
