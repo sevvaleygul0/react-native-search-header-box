@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import {
   TextInput,
   Text,
@@ -17,7 +17,7 @@ import styles, {
   _searchBarShadowStyle,
 } from './SeachHeaderBox.style';
 
-export interface Props {
+interface IProps {
   mainContainerStyle?: ViewStyle | Array<ViewStyle>;
   leftIconComponent?: React.ReactChild;
   headerText?: string;
@@ -31,9 +31,9 @@ export interface Props {
   bottomContainerStyle?: ViewStyle | Array<ViewStyle>;
   leftButtonContainerStyle?: ViewStyle | Array<ViewStyle>;
   leftButtonBackgroundColor?: string;
-  isVisibleLeftButton: boolean;
-  isVisibleRightButton: boolean;
-  isVisibleSearch: boolean;
+  isVisibleLeftButton?: boolean;
+  isVisibleRightButton?: boolean;
+  isVisibleSearch?: boolean;
   rightButtonContainerStyle?: ViewStyle | Array<ViewStyle>;
   placeholderTextColor?: string;
   searchBarShadowColor?: string;
@@ -48,10 +48,10 @@ interface State {
   isSearchActive: boolean;
 }
 
-export class SearchHeaderBox extends React.Component<Props, State> {
+export default class SearchHeaderBox extends React.Component<IProps, State> {
   inputRef: TextInput | null = null;
 
-  constructor(props: Props) {
+  constructor(props: IProps) {
     super(props);
     this.state = {
       isSearchActive: false,
