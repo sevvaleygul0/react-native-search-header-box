@@ -7,7 +7,6 @@ import {
   ViewStyle,
   Image,
   TextStyle,
-  Keyboard,
 } from 'react-native';
 import Androw from 'react-native-androw';
 import styles, {
@@ -15,6 +14,7 @@ import styles, {
   _bottomContainerStyle,
   _leftButtonContainerStyle,
   _searchBarShadowStyle,
+  _headerButtonShadowStyle,
 } from './SeachHeaderBox.style';
 
 interface IProps {
@@ -26,7 +26,6 @@ interface IProps {
   headerTitleTextStyle?: TextStyle | Array<TextStyle>;
   headerTitleTextComponent?: React.ReactChild;
   searchIconComponent?: React.ReactChild;
-  placeholderText?: string;
   textInputStyle?: TextStyle | Array<TextStyle>;
   bottomContainerStyle?: ViewStyle | Array<ViewStyle>;
   leftButtonContainerStyle?: ViewStyle | Array<ViewStyle>;
@@ -35,13 +34,18 @@ interface IProps {
   isVisibleRightButton?: boolean;
   isVisibleSearch?: boolean;
   rightButtonContainerStyle?: ViewStyle | Array<ViewStyle>;
-  placeholderTextColor?: string;
   searchBarShadowColor?: string;
   searchBarShadowStyle?: ViewStyle | Array<ViewStyle>;
   inputActiveBorderColor?: string;
   inputBorderColor?: string;
+  leftButtonShadowStyle?: ViewStyle | Array<ViewStyle>;
+  leftButtonShadowColor?: string;
+  rightButtonShadowColor?: string;
+  rightButtonShadowStyle?: ViewStyle | Array<ViewStyle>;
   onLeftButtonPress?: () => void;
   onRightButtonPress?: () => void;
+  onFocus?: () => void;
+  onBlur?: () => void;
 }
 
 interface State {
@@ -49,8 +53,6 @@ interface State {
 }
 
 export default class SearchHeaderBox extends React.Component<IProps, State> {
-  inputRef: TextInput | null = null;
-
   constructor(props: IProps) {
     super(props);
     this.state = {
@@ -58,29 +60,23 @@ export default class SearchHeaderBox extends React.Component<IProps, State> {
     };
   }
 
-  componentDidMount() {
-    Keyboard.addListener('keyboardDidHide', this._forceLoseFocus);
-  }
-
-  topComponent = () => {
+  renderLeftButton = () => {
     const {
       leftIconComponent,
-      headerText = '',
-      rightButtonComponent,
-      rightButtonBackgroundColor = '#F4F4F4',
       leftButtonBackgroundColor = '#F4F4F4',
-      headerTitleTextStyle,
-      headerTitleTextComponent,
       leftButtonContainerStyle,
-      rightButtonContainerStyle,
       isVisibleLeftButton = true,
-      isVisibleRightButton = true,
+      leftButtonShadowStyle,
+      leftButtonShadowColor = '#F4F4F4',
       onLeftButtonPress,
-      onRightButtonPress,
     } = this.props;
     return (
-      <View style={styles.topContainerStyle}>
-        {isVisibleLeftButton && (
+      isVisibleLeftButton && (
+        <Androw
+          style={[
+            _headerButtonShadowStyle(leftButtonShadowColor),
+            leftButtonShadowStyle,
+          ]}>
           <TouchableOpacity
             style={[
               _leftButtonContainerStyle(leftButtonBackgroundColor),
@@ -94,50 +90,83 @@ export default class SearchHeaderBox extends React.Component<IProps, State> {
               />
             )}
           </TouchableOpacity>
-        )}
-        <View>
-          {headerTitleTextComponent || (
-            <Text style={[styles.headerTitleTextStyle, headerTitleTextStyle]}>
-              {headerText}
-            </Text>
-          )}
-        </View>
-        {isVisibleRightButton && (
-          <View>
-            <TouchableOpacity
-              style={[
-                _rightButton(rightButtonBackgroundColor),
-                rightButtonContainerStyle,
-              ]}
-              onPress={onRightButtonPress && onRightButtonPress}>
-              {rightButtonComponent || (
-                <Image
-                  source={require('../local-assets/bell.png')}
-                  style={{width: 20, height: 20}}
-                />
-              )}
-            </TouchableOpacity>
-          </View>
-        )}
+        </Androw>
+      )
+    );
+  };
+
+  renderTitle = () => {
+    const {
+      headerText = '',
+      headerTitleTextStyle,
+      headerTitleTextComponent,
+    } = this.props;
+    return (
+      headerTitleTextComponent || (
+        <Text style={[styles.headerTitleTextStyle, headerTitleTextStyle]}>
+          {headerText}
+        </Text>
+      )
+    );
+  };
+
+  renderRightButton = () => {
+    const {
+      rightButtonComponent,
+      rightButtonBackgroundColor = '#F4F4F4',
+      rightButtonContainerStyle,
+      isVisibleRightButton = true,
+      rightButtonShadowColor = '#F4F4F4',
+      rightButtonShadowStyle,
+      onRightButtonPress,
+    } = this.props;
+    return (
+      isVisibleRightButton && (
+        <Androw
+          style={[
+            _headerButtonShadowStyle(rightButtonShadowColor),
+            rightButtonShadowStyle,
+          ]}>
+          <TouchableOpacity
+            style={[
+              _rightButton(rightButtonBackgroundColor),
+              rightButtonContainerStyle,
+            ]}
+            onPress={onRightButtonPress && onRightButtonPress}>
+            {rightButtonComponent || (
+              <Image
+                source={require('../local-assets/bell.png')}
+                style={styles.rightButtonImageStyle}
+              />
+            )}
+          </TouchableOpacity>
+        </Androw>
+      )
+    );
+  };
+
+  renderTopContainer = () => {
+    return (
+      <View style={styles.topContainerStyle}>
+        {this.renderLeftButton()}
+        {this.renderTitle()}
+        {this.renderRightButton()}
       </View>
     );
   };
 
-  _forceLoseFocus = () => {
-    this.inputRef?.blur();
-  };
-
-  bottomComponent = () => {
+  renderBottomContainer = () => {
     const {
       searchIconComponent,
-      placeholderText = 'Search..',
       textInputStyle,
       bottomContainerStyle,
-      placeholderTextColor = '#C5C5C5',
-      searchBarShadowColor = '#BA8DB9',
+      searchBarShadowColor = '#50C479',
       searchBarShadowStyle,
       inputActiveBorderColor = '#50C479',
       inputBorderColor = '#F4F4F4',
+      isVisibleSearch = true,
+      onFocus,
+      onBlur,
     } = this.props;
     const icon = this.state.isSearchActive
       ? require('../local-assets/active-search.png')
@@ -146,39 +175,41 @@ export default class SearchHeaderBox extends React.Component<IProps, State> {
       ? inputActiveBorderColor
       : inputBorderColor;
     return (
-      <Androw
-        style={[
-          _searchBarShadowStyle(searchBarShadowColor),
-          searchBarShadowStyle,
-        ]}>
-        <View
-          style={[_bottomContainerStyle(borderColor), bottomContainerStyle]}>
-          {searchIconComponent || (
-            <Image source={icon} style={{width: 20, height: 20}} />
-          )}
-
-          <TextInput
-            placeholderTextColor={placeholderTextColor}
-            {...this.props}
-            ref={(ref) => (this.inputRef = ref)}
-            placeholder={placeholderText}
-            style={[styles.textInputStyle, textInputStyle]}
-            onFocus={() => this.setState({isSearchActive: true})}
-            onBlur={() => {
-              this.setState({isSearchActive: false});
-            }}
-          />
-        </View>
-      </Androw>
+      isVisibleSearch && (
+        <Androw
+          style={[
+            _searchBarShadowStyle(searchBarShadowColor),
+            searchBarShadowStyle,
+          ]}>
+          <View
+            style={[_bottomContainerStyle(borderColor), bottomContainerStyle]}>
+            {searchIconComponent || (
+              <Image source={icon} style={styles.searchIconStyle} />
+            )}
+            <TextInput
+              {...this.props}
+              style={[styles.textInputStyle, textInputStyle]}
+              onFocus={() => {
+                onFocus && onFocus();
+                this.setState({isSearchActive: true});
+              }}
+              onBlur={() => {
+                onBlur && onBlur();
+                this.setState({isSearchActive: false});
+              }}
+            />
+          </View>
+        </Androw>
+      )
     );
   };
 
   render() {
-    const {mainContainerStyle, isVisibleSearch = true} = this.props;
+    const {mainContainerStyle} = this.props;
     return (
       <View style={[styles.mainContainerStyle, mainContainerStyle]}>
-        {this.topComponent()}
-        {isVisibleSearch && this.bottomComponent()}
+        {this.renderTopContainer()}
+        {this.renderBottomContainer()}
       </View>
     );
   }

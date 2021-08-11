@@ -1,9 +1,9 @@
 import {
   ViewStyle,
-  Platform,
   TextStyle,
   StyleSheet,
   Dimensions,
+  ImageStyle,
 } from 'react-native';
 
 const screenWidth = Dimensions.get('window').width;
@@ -15,7 +15,19 @@ interface Style {
   headerTitleTextStyle: TextStyle;
   textInputStyle: TextStyle;
   leftButtonContainerStyle: ViewStyle;
+  searchIconStyle: ImageStyle;
+  rightButtonImageStyle: ImageStyle;
 }
+
+export const _headerButtonShadowStyle = (shadowColor: string): ViewStyle => ({
+  shadowRadius: 8,
+  shadowOpacity: 0.3,
+  shadowColor: shadowColor,
+  shadowOffset: {
+    width: 0,
+    height: 3,
+  },
+});
 
 export const _rightButton = (backgroundColor: string): ViewStyle => ({
   backgroundColor,
@@ -46,7 +58,7 @@ export const _leftButtonContainerStyle = (
 });
 
 export const _bottomContainerStyle = (borderColor: string): ViewStyle => ({
-  width: '100%',
+  width: screenWidth * 0.9,
   height: 40,
   borderWidth: 1,
   marginTop: 12,
@@ -62,7 +74,7 @@ export const _bottomContainerStyle = (borderColor: string): ViewStyle => ({
 
 export const _searchBarShadowStyle = (shadowColor): ViewStyle => ({
   shadowRadius: 8,
-  shadowOpacity: 0.5,
+  shadowOpacity: 0.2,
   shadowColor,
   shadowOffset: {
     width: 0,
@@ -105,5 +117,13 @@ export default StyleSheet.create<Style>({
     alignItems: 'center',
     width: 40,
     height: 40,
+  },
+  searchIconStyle: {
+    width: 20,
+    height: 20,
+  },
+  rightButtonImageStyle: {
+    width: 20,
+    height: 20,
   },
 });
