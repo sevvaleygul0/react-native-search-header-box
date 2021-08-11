@@ -17,6 +17,7 @@ interface Style {
   leftButtonContainerStyle: ViewStyle;
   searchIconStyle: ImageStyle;
   rightButtonImageStyle: ImageStyle;
+  leftButtonImageStyle: ImageStyle;
 }
 
 export const _headerButtonShadowStyle = (shadowColor: string): ViewStyle => ({
@@ -105,7 +106,7 @@ export default StyleSheet.create<Style>({
     paddingRight: 12,
     width: '100%',
     height: '100%',
-    color: 'purple',
+    color: '#707070',
   },
   leftButtonContainerStyle: {
     borderRadius: 12,
@@ -125,5 +126,9 @@ export default StyleSheet.create<Style>({
   rightButtonImageStyle: {
     width: 20,
     height: 20,
+  },
+  leftButtonImageStyle: {
+    width: 16,
+    height: 16,
   },
 });

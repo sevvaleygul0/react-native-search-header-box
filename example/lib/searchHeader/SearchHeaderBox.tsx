@@ -86,7 +86,7 @@ export default class SearchHeaderBox extends React.Component<IProps, State> {
             {leftIconComponent || (
               <Image
                 source={require('../local-assets/arrow.png')}
-                style={{width: 16, height: 16}}
+                style={styles.leftButtonImageStyle}
               />
             )}
           </TouchableOpacity>
