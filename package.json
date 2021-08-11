@@ -1,6 +1,6 @@
 {
   "name": "react-native-search-header-box",
-  "version": "0.0.8",
+  "version": "0.1.0",
   "description": "Hii, search header bar",
   "main": "./build/dist/SearchHeaderBox.js",
   "repository": "git@github.com:sevvaleygul0/react-native-typescript-library-starter.git",

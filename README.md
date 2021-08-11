@@ -1,4 +1,4 @@
-<img alt="React Native Search Header" src="assets/logo.png" width="350"/>
+<img alt="React Native Search Header" src="assets/logo.png" width="1050"/>
 
 <p align="center">
   <img alt="React Native Typescript Library Starter"
